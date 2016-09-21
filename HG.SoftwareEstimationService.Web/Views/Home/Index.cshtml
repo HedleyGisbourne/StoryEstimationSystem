@@ -1,0 +1,24 @@
+﻿<h2>Home</h2>
+<div id="SystemGrid" class="DataGrid"></div>
+<div class="application-button-bar application-button-bar-center">
+    <div class="pull-right">
+        <button id="systemConfiguration" class="btn btn-primary btn-lg">System Configuration</button>
+        <button id="viewSystemStories" class="btn btn-primary btn-lg">View System Stories</button>
+    </div>
+</div>
+
+<script>
+    var grid = ui.grids.initGrid(
+        "SystemGrid",
+        false,
+        false,
+        false,
+        "/api/Home/GetAllSystems");
+
+    grid.disableWhenNoRowSelected('systemConfiguration');
+    grid.disableWhenNoRowSelected('viewSystemStories');
+
+    $("#viewSystemStories").click(function() {
+        location.href = 'Stories/' + grid.getselectedRowId();
+    });
+</script>

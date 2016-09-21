@@ -1,0 +1,84 @@
+﻿<script src="~/Scripts/ui/grids/observations.js"></script>
+<h2>Observations</h2>
+<h3>Ticket: @ViewBag.TicketName</h3>
+<div id="ObservationsGrid" class="DataGrid"></div>
+
+<div class="application-button-bar">
+    <div class="pull-right">
+        <button id="addButton" class="btn btn-primary btn-lg">Add</button>
+        <button id="editButton" class="btn btn-primary btn-lg">Edit</button>
+        <button id="deleteButton" class="btn btn-primary btn-lg">Delete</button>
+
+    </div>
+    
+    <button class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "Stories", new {id = ViewBag.systemId})'">Back</button>
+    <button id="estimateTask" class="btn btn-primary btn-lg">Estimate Task</button>
+    <button id="completeTask" class="btn btn-primary btn-lg">Complete Task</button>
+</div>
+<div class="application-button-bar">
+    <div class="pull-right">
+    </div>
+</div>
+
+<div id="ObservationsModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="">
+                <h2 style="text-align: center">Observation Definition</h2>
+                <div class="modal-body">
+                    <form id="observationForm" class="modal-body" action="" method="post" novalidate="novalidate">
+                        <div id="MandatoryPartsSection"></div>
+                        <div id="PartsSection"></div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="backButton" class="btn btn-primary btn-lg">Back</button>
+                <button type="button" id="submitButton" class="btn btn-primary btn-lg">Save Changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="CompleteTaskSection"></div>
+
+<script>
+    var systemId = @ViewBag.systemId;
+    var ticketId = @ViewBag.TicketId;
+
+    var grid = ui.grids.initGrid(
+        "ObservationsGrid",
+        false,
+        false,
+        false,
+        "/api/Observations/GetAll/" + ticketId);
+
+    grid.disableWhenNoRowSelected("editButton");
+    $('#editButton').click(function() {
+        $('#ObservationsModal').modal('show');
+        observationsModel.init(grid.getSelectedRowId());
+    });
+
+    $('#addButton').click(function() {
+        $('#ObservationsModal').modal('show');
+        observationsModel.init();
+    });
+
+    $('#deleteButton').click(function() {
+        service.userConfirmation(function() {
+            service.callServer($.get("/api/Observations/Delete/" + grid.getSelectedRowId())).done(function() { grid.refreshGrid() });
+        });
+    });
+
+    $('#estimateTask').click(function() {
+        service.callServer($.get("/api/Stories/EstimateStory/" + systemId + "/" + ticketId))
+            .done(function(result) {
+                if (result != null && result !== "")
+                    alert(result);
+            });
+    });
+
+    var observationsModel = ui.observations(ticketId, grid);    
+
+    ui.completeTask(function(){ return ticketId; }, function (){ location.href = '/Stories/' + systemId + '/true' });
+</script>

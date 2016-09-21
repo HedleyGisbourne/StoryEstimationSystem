@@ -1,0 +1,18 @@
+﻿@model int
+<h2>System Layers</h2>
+<div id="LayersGrid" class="DataGrid"></div>
+
+<script>
+    var grid = ui.grids.initGrid(
+        "LayersGrid",
+        true,
+        true,
+        true,
+        "/api/Layers/GetAllLayers/@Model",
+        "/api/Layers/AddLayer/@Model",
+        "/api/Layers/EditLayer/@Model",
+        "/api/Layers/DeleteLayer");
+
+    grid.setDefaultValueForColumn('SystemId', @Model);
+    grid.addCustomButton("backButton", "Back", '@Url.Action("Index", new { systemId = @Model })');
+</script>

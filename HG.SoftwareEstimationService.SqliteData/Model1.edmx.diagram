@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f66652c327b543a597b716294c7d820f" Name="Diagram1" ZoomLevel="98">
+        <EntityTypeShape EntityType="DatabaseModel.Configuration" Width="1.5" PointX="8.5" PointY="4.875" />
+        <EntityTypeShape EntityType="DatabaseModel.Enumeration" Width="1.625" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="DatabaseModel.EnumerationItem" Width="2.125" PointX="0.5" PointY="7.25" />
+        <EntityTypeShape EntityType="DatabaseModel.PartType" Width="1.625" PointX="2.875" PointY="4.25" />
+        <EntityTypeShape EntityType="DatabaseModel.PartTypeProperty" Width="1.75" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Property" Width="1.75" PointX="5.375" PointY="7.25" />
+        <EntityTypeShape EntityType="DatabaseModel.Story" Width="1.875" PointX="2.875" PointY="1" />
+        <EntityTypeShape EntityType="DatabaseModel.StoryPart" Width="1.625" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="DatabaseModel.StoryPartProperty" Width="1.75" PointX="7.5" PointY="1.375" />
+        <EntityTypeShape EntityType="DatabaseModel.SystemInDevelopment" Width="1.875" PointX="0.5" PointY="1.375" />
+        <AssociationConnector Association="DatabaseModel.FK_EnumerationItem_0_0" />
+        <AssociationConnector Association="DatabaseModel.FK_Property_0_0" />
+        <AssociationConnector Association="DatabaseModel.FK_PartTypeProperty_1_0" />
+        <AssociationConnector Association="DatabaseModel.FK_StoryPart_0_0" />
+        <AssociationConnector Association="DatabaseModel.FK_PartTypeProperty_0_0" />
+        <AssociationConnector Association="DatabaseModel.FK_StoryPartProperty_0_0" />
+        <AssociationConnector Association="DatabaseModel.FK_Story_0_0" />
+        <AssociationConnector Association="DatabaseModel.FK_Story_1_0" />
+        <AssociationConnector Association="DatabaseModel.FK_StoryPart_1_0" />
+        <AssociationConnector Association="DatabaseModel.FK_StoryPartProperty_1_0" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

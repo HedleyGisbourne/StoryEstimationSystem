@@ -1,0 +1,673 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="data source=&quot;C:\Users\Hedley\Documents\Visual Studio 2013\Projects\Dissertation\SqliteData\Database.sqlite&quot;;synchronous=Off" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ConfigurationId" Type="integer" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="150" />
+          <Property Name="Value" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Enumeration">
+          <Key>
+            <PropertyRef Name="EnumerationId" />
+          </Key>
+          <Property Name="EnumerationId" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="EnumerationItem">
+          <Key>
+            <PropertyRef Name="EnumerationItemId" />
+          </Key>
+          <Property Name="EnumerationItemId" Type="integer" Nullable="false" />
+          <Property Name="EnumerationId" Type="integer" Nullable="false" />
+          <Property Name="EnumerationEnumerationId" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PartType">
+          <Key>
+            <PropertyRef Name="PartTypeId" />
+          </Key>
+          <Property Name="PartTypeId" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="PartTypeProperty">
+          <Key>
+            <PropertyRef Name="PartTypePropertyId" />
+          </Key>
+          <Property Name="PartTypePropertyId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartTypeId" Type="integer" Nullable="false" />
+          <Property Name="PropertyId" Type="integer" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="PropertyId" />
+          </Key>
+          <Property Name="PropertyId" Type="integer" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="100" />
+          <Property Name="EnumerationId" Type="integer" />
+        </EntityType>
+        <EntityType Name="Story">
+          <Key>
+            <PropertyRef Name="StoryId" />
+          </Key>
+          <Property Name="StoryId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="StoryTitle" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="SystemId" Type="integer" Nullable="false" />
+          <Property Name="ActualCompletetionDuration" Type="real" />
+          <Property Name="EstimatedCompletionDuration" Type="real" />
+          <Property Name="CompletionDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="StoryPart">
+          <Key>
+            <PropertyRef Name="StoryPartId" />
+          </Key>
+          <Property Name="StoryPartId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoryId" Type="integer" />
+          <Property Name="PartTypeId" Type="integer" />
+          <Property Name="PartDescription" Type="varchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="StoryPartProperty">
+          <Key>
+            <PropertyRef Name="StoryPartPropertyId" />
+          </Key>
+          <Property Name="StoryPartPropertyId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StoryPartId" Type="integer" Nullable="false" />
+          <Property Name="PropertyId" Type="integer" Nullable="false" />
+          <Property Name="PropertyValue" Type="integer" />
+        </EntityType>
+        <EntityType Name="SystemInDevelopment">
+          <Key>
+            <PropertyRef Name="SystemId" />
+          </Key>
+          <Property Name="SystemId" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OwnerId" Type="integer" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LogicalDelete" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EnumerationItem_0_0">
+          <End Role="Enumeration" Type="Self.Enumeration" Multiplicity="1" />
+          <End Role="EnumerationItem" Type="Self.EnumerationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enumeration">
+              <PropertyRef Name="EnumerationId" />
+            </Principal>
+            <Dependent Role="EnumerationItem">
+              <PropertyRef Name="EnumerationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartTypeProperty_0_0">
+          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="PartTypeProperty" Type="Self.PartTypeProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="PropertyId" />
+            </Principal>
+            <Dependent Role="PartTypeProperty">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartTypeProperty_1_0">
+          <End Role="PartType" Type="Self.PartType" Multiplicity="1" />
+          <End Role="PartTypeProperty" Type="Self.PartTypeProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartType">
+              <PropertyRef Name="PartTypeId" />
+            </Principal>
+            <Dependent Role="PartTypeProperty">
+              <PropertyRef Name="PartTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_0_0">
+          <End Role="Enumeration" Type="Self.Enumeration" Multiplicity="0..1" />
+          <End Role="Property" Type="Self.Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enumeration">
+              <PropertyRef Name="EnumerationId" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="EnumerationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_0_0">
+          <End Role="SystemInDevelopment" Type="Self.SystemInDevelopment" Multiplicity="1" />
+          <End Role="Story" Type="Self.Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemInDevelopment">
+              <PropertyRef Name="SystemId" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="SystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_1_0">
+          <End Role="SystemInDevelopment" Type="Self.SystemInDevelopment" Multiplicity="1" />
+          <End Role="Story" Type="Self.Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemInDevelopment">
+              <PropertyRef Name="SystemId" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="SystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPart_0_0">
+          <End Role="PartType" Type="Self.PartType" Multiplicity="0..1" />
+          <End Role="StoryPart" Type="Self.StoryPart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartType">
+              <PropertyRef Name="PartTypeId" />
+            </Principal>
+            <Dependent Role="StoryPart">
+              <PropertyRef Name="PartTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPart_1_0">
+          <End Role="Story" Type="Self.Story" Multiplicity="0..1" />
+          <End Role="StoryPart" Type="Self.StoryPart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="StoryId" />
+            </Principal>
+            <Dependent Role="StoryPart">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPartProperty_0_0">
+          <End Role="Property" Type="Self.Property" Multiplicity="1" />
+          <End Role="StoryPartProperty" Type="Self.StoryPartProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="PropertyId" />
+            </Principal>
+            <Dependent Role="StoryPartProperty">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPartProperty_1_0">
+          <End Role="StoryPart" Type="Self.StoryPart" Multiplicity="1" />
+          <End Role="StoryPartProperty" Type="Self.StoryPartProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoryPart">
+              <PropertyRef Name="StoryPartId" />
+            </Principal>
+            <Dependent Role="StoryPartProperty">
+              <PropertyRef Name="StoryPartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="Configuration" EntityType="Self.Configuration" store:Type="Tables" />
+          <EntitySet Name="Enumeration" EntityType="Self.Enumeration" store:Type="Tables" />
+          <EntitySet Name="EnumerationItem" EntityType="Self.EnumerationItem" store:Type="Tables" />
+          <EntitySet Name="PartType" EntityType="Self.PartType" store:Type="Tables" />
+          <EntitySet Name="PartTypeProperty" EntityType="Self.PartTypeProperty" store:Type="Tables" />
+          <EntitySet Name="Property" EntityType="Self.Property" store:Type="Tables" />
+          <EntitySet Name="Story" EntityType="Self.Story" store:Type="Tables" />
+          <EntitySet Name="StoryPart" EntityType="Self.StoryPart" store:Type="Tables" />
+          <EntitySet Name="StoryPartProperty" EntityType="Self.StoryPartProperty" store:Type="Tables" />
+          <EntitySet Name="SystemInDevelopment" EntityType="Self.SystemInDevelopment" store:Type="Tables" />
+          <AssociationSet Name="FK_EnumerationItem_0_0" Association="Self.FK_EnumerationItem_0_0">
+            <End Role="Enumeration" EntitySet="Enumeration" />
+            <End Role="EnumerationItem" EntitySet="EnumerationItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartTypeProperty_0_0" Association="Self.FK_PartTypeProperty_0_0">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="PartTypeProperty" EntitySet="PartTypeProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartTypeProperty_1_0" Association="Self.FK_PartTypeProperty_1_0">
+            <End Role="PartType" EntitySet="PartType" />
+            <End Role="PartTypeProperty" EntitySet="PartTypeProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_0_0" Association="Self.FK_Property_0_0">
+            <End Role="Enumeration" EntitySet="Enumeration" />
+            <End Role="Property" EntitySet="Property" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_0_0" Association="Self.FK_Story_0_0">
+            <End Role="SystemInDevelopment" EntitySet="SystemInDevelopment" />
+            <End Role="Story" EntitySet="Story" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_1_0" Association="Self.FK_Story_1_0">
+            <End Role="SystemInDevelopment" EntitySet="SystemInDevelopment" />
+            <End Role="Story" EntitySet="Story" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPart_0_0" Association="Self.FK_StoryPart_0_0">
+            <End Role="PartType" EntitySet="PartType" />
+            <End Role="StoryPart" EntitySet="StoryPart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPart_1_0" Association="Self.FK_StoryPart_1_0">
+            <End Role="Story" EntitySet="Story" />
+            <End Role="StoryPart" EntitySet="StoryPart" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPartProperty_0_0" Association="Self.FK_StoryPartProperty_0_0">
+            <End Role="Property" EntitySet="Property" />
+            <End Role="StoryPartProperty" EntitySet="StoryPartProperty" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPartProperty_1_0" Association="Self.FK_StoryPartProperty_1_0">
+            <End Role="StoryPart" EntitySet="StoryPart" />
+            <End Role="StoryPartProperty" EntitySet="StoryPartProperty" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+          <EntitySet Name="Configurations" EntityType="DatabaseModel.Configuration" />
+          <EntitySet Name="Enumerations" EntityType="DatabaseModel.Enumeration" />
+          <EntitySet Name="EnumerationItems" EntityType="DatabaseModel.EnumerationItem" />
+          <EntitySet Name="PartTypes" EntityType="DatabaseModel.PartType" />
+          <EntitySet Name="PartTypeProperties" EntityType="DatabaseModel.PartTypeProperty" />
+          <EntitySet Name="Properties" EntityType="DatabaseModel.Property" />
+          <EntitySet Name="Stories" EntityType="DatabaseModel.Story" />
+          <EntitySet Name="StoryParts" EntityType="DatabaseModel.StoryPart" />
+          <EntitySet Name="StoryPartProperties" EntityType="DatabaseModel.StoryPartProperty" />
+          <EntitySet Name="SystemInDevelopments" EntityType="DatabaseModel.SystemInDevelopment" />
+          <AssociationSet Name="FK_EnumerationItem_0_0" Association="DatabaseModel.FK_EnumerationItem_0_0">
+            <End Role="Enumeration" EntitySet="Enumerations" />
+            <End Role="EnumerationItem" EntitySet="EnumerationItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Property_0_0" Association="DatabaseModel.FK_Property_0_0">
+            <End Role="Enumeration" EntitySet="Enumerations" />
+            <End Role="Property" EntitySet="Properties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartTypeProperty_1_0" Association="DatabaseModel.FK_PartTypeProperty_1_0">
+            <End Role="PartType" EntitySet="PartTypes" />
+            <End Role="PartTypeProperty" EntitySet="PartTypeProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPart_0_0" Association="DatabaseModel.FK_StoryPart_0_0">
+            <End Role="PartType" EntitySet="PartTypes" />
+            <End Role="StoryPart" EntitySet="StoryParts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PartTypeProperty_0_0" Association="DatabaseModel.FK_PartTypeProperty_0_0">
+            <End Role="Property" EntitySet="Properties" />
+            <End Role="PartTypeProperty" EntitySet="PartTypeProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPartProperty_0_0" Association="DatabaseModel.FK_StoryPartProperty_0_0">
+            <End Role="Property" EntitySet="Properties" />
+            <End Role="StoryPartProperty" EntitySet="StoryPartProperties" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_0_0" Association="DatabaseModel.FK_Story_0_0">
+            <End Role="SystemInDevelopment" EntitySet="SystemInDevelopments" />
+            <End Role="Story" EntitySet="Stories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Story_1_0" Association="DatabaseModel.FK_Story_1_0">
+            <End Role="SystemInDevelopment" EntitySet="SystemInDevelopments" />
+            <End Role="Story" EntitySet="Stories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPart_1_0" Association="DatabaseModel.FK_StoryPart_1_0">
+            <End Role="Story" EntitySet="Stories" />
+            <End Role="StoryPart" EntitySet="StoryParts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StoryPartProperty_1_0" Association="DatabaseModel.FK_StoryPartProperty_1_0">
+            <End Role="StoryPart" EntitySet="StoryParts" />
+            <End Role="StoryPartProperty" EntitySet="StoryPartProperties" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Configuration">
+          <Key>
+            <PropertyRef Name="ConfigurationId" />
+          </Key>
+          <Property Name="ConfigurationId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Enumeration">
+          <Key>
+            <PropertyRef Name="EnumerationId" />
+          </Key>
+          <Property Name="EnumerationId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EnumerationItems" Relationship="DatabaseModel.FK_EnumerationItem_0_0" FromRole="Enumeration" ToRole="EnumerationItem" />
+          <NavigationProperty Name="Properties" Relationship="DatabaseModel.FK_Property_0_0" FromRole="Enumeration" ToRole="Property" />
+        </EntityType>
+        <EntityType Name="EnumerationItem">
+          <Key>
+            <PropertyRef Name="EnumerationItemId" />
+          </Key>
+          <Property Name="EnumerationItemId" Type="Int64" Nullable="false" />
+          <Property Name="EnumerationId" Type="Int64" Nullable="false" />
+          <Property Name="EnumerationEnumerationId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Enumeration" Relationship="DatabaseModel.FK_EnumerationItem_0_0" FromRole="EnumerationItem" ToRole="Enumeration" />
+        </EntityType>
+        <EntityType Name="PartType">
+          <Key>
+            <PropertyRef Name="PartTypeId" />
+          </Key>
+          <Property Name="PartTypeId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PartTypeProperties" Relationship="DatabaseModel.FK_PartTypeProperty_1_0" FromRole="PartType" ToRole="PartTypeProperty" />
+          <NavigationProperty Name="StoryParts" Relationship="DatabaseModel.FK_StoryPart_0_0" FromRole="PartType" ToRole="StoryPart" />
+        </EntityType>
+        <EntityType Name="PartTypeProperty">
+          <Key>
+            <PropertyRef Name="PartTypePropertyId" />
+          </Key>
+          <Property Name="PartTypePropertyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartTypeId" Type="Int64" Nullable="false" />
+          <Property Name="PropertyId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="PartType" Relationship="DatabaseModel.FK_PartTypeProperty_1_0" FromRole="PartTypeProperty" ToRole="PartType" />
+          <NavigationProperty Name="Property" Relationship="DatabaseModel.FK_PartTypeProperty_0_0" FromRole="PartTypeProperty" ToRole="Property" />
+        </EntityType>
+        <EntityType Name="Property">
+          <Key>
+            <PropertyRef Name="PropertyId" />
+          </Key>
+          <Property Name="PropertyId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EnumerationId" Type="Int64" />
+          <NavigationProperty Name="Enumeration" Relationship="DatabaseModel.FK_Property_0_0" FromRole="Property" ToRole="Enumeration" />
+          <NavigationProperty Name="PartTypeProperties" Relationship="DatabaseModel.FK_PartTypeProperty_0_0" FromRole="Property" ToRole="PartTypeProperty" />
+          <NavigationProperty Name="StoryPartProperties" Relationship="DatabaseModel.FK_StoryPartProperty_0_0" FromRole="Property" ToRole="StoryPartProperty" />
+        </EntityType>
+        <EntityType Name="Story">
+          <Key>
+            <PropertyRef Name="StoryId" />
+          </Key>
+          <Property Name="StoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StoryTitle" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SystemId" Type="Int64" Nullable="false" />
+          <Property Name="ActualCompletetionDuration" Type="Double" />
+          <Property Name="EstimatedCompletionDuration" Type="Double" />
+          <Property Name="CompletionDate" Type="DateTime" />
+          <NavigationProperty Name="SystemInDevelopment" Relationship="DatabaseModel.FK_Story_0_0" FromRole="Story" ToRole="SystemInDevelopment" />
+          <NavigationProperty Name="SystemInDevelopment1" Relationship="DatabaseModel.FK_Story_1_0" FromRole="Story" ToRole="SystemInDevelopment" />
+          <NavigationProperty Name="StoryParts" Relationship="DatabaseModel.FK_StoryPart_1_0" FromRole="Story" ToRole="StoryPart" />
+        </EntityType>
+        <EntityType Name="StoryPart">
+          <Key>
+            <PropertyRef Name="StoryPartId" />
+          </Key>
+          <Property Name="StoryPartId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoryId" Type="Int64" />
+          <Property Name="PartTypeId" Type="Int64" />
+          <Property Name="PartDescription" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PartType" Relationship="DatabaseModel.FK_StoryPart_0_0" FromRole="StoryPart" ToRole="PartType" />
+          <NavigationProperty Name="Story" Relationship="DatabaseModel.FK_StoryPart_1_0" FromRole="StoryPart" ToRole="Story" />
+          <NavigationProperty Name="StoryPartProperties" Relationship="DatabaseModel.FK_StoryPartProperty_1_0" FromRole="StoryPart" ToRole="StoryPartProperty" />
+        </EntityType>
+        <EntityType Name="StoryPartProperty">
+          <Key>
+            <PropertyRef Name="StoryPartPropertyId" />
+          </Key>
+          <Property Name="StoryPartPropertyId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StoryPartId" Type="Int64" Nullable="false" />
+          <Property Name="PropertyId" Type="Int64" Nullable="false" />
+          <Property Name="PropertyValue" Type="Int64" />
+          <NavigationProperty Name="Property" Relationship="DatabaseModel.FK_StoryPartProperty_0_0" FromRole="StoryPartProperty" ToRole="Property" />
+          <NavigationProperty Name="StoryPart" Relationship="DatabaseModel.FK_StoryPartProperty_1_0" FromRole="StoryPartProperty" ToRole="StoryPart" />
+        </EntityType>
+        <EntityType Name="SystemInDevelopment">
+          <Key>
+            <PropertyRef Name="SystemId" />
+          </Key>
+          <Property Name="SystemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OwnerId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LogicalDelete" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Stories" Relationship="DatabaseModel.FK_Story_0_0" FromRole="SystemInDevelopment" ToRole="Story" />
+          <NavigationProperty Name="Stories1" Relationship="DatabaseModel.FK_Story_1_0" FromRole="SystemInDevelopment" ToRole="Story" />
+        </EntityType>
+        <Association Name="FK_EnumerationItem_0_0">
+          <End Type="DatabaseModel.Enumeration" Role="Enumeration" Multiplicity="1" />
+          <End Type="DatabaseModel.EnumerationItem" Role="EnumerationItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enumeration">
+              <PropertyRef Name="EnumerationId" />
+            </Principal>
+            <Dependent Role="EnumerationItem">
+              <PropertyRef Name="EnumerationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Property_0_0">
+          <End Type="DatabaseModel.Enumeration" Role="Enumeration" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Property" Role="Property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Enumeration">
+              <PropertyRef Name="EnumerationId" />
+            </Principal>
+            <Dependent Role="Property">
+              <PropertyRef Name="EnumerationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartTypeProperty_1_0">
+          <End Type="DatabaseModel.PartType" Role="PartType" Multiplicity="1" />
+          <End Type="DatabaseModel.PartTypeProperty" Role="PartTypeProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartType">
+              <PropertyRef Name="PartTypeId" />
+            </Principal>
+            <Dependent Role="PartTypeProperty">
+              <PropertyRef Name="PartTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPart_0_0">
+          <End Type="DatabaseModel.PartType" Role="PartType" Multiplicity="0..1" />
+          <End Type="DatabaseModel.StoryPart" Role="StoryPart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PartType">
+              <PropertyRef Name="PartTypeId" />
+            </Principal>
+            <Dependent Role="StoryPart">
+              <PropertyRef Name="PartTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PartTypeProperty_0_0">
+          <End Type="DatabaseModel.Property" Role="Property" Multiplicity="1" />
+          <End Type="DatabaseModel.PartTypeProperty" Role="PartTypeProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="PropertyId" />
+            </Principal>
+            <Dependent Role="PartTypeProperty">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPartProperty_0_0">
+          <End Type="DatabaseModel.Property" Role="Property" Multiplicity="1" />
+          <End Type="DatabaseModel.StoryPartProperty" Role="StoryPartProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Property">
+              <PropertyRef Name="PropertyId" />
+            </Principal>
+            <Dependent Role="StoryPartProperty">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_0_0">
+          <End Type="DatabaseModel.SystemInDevelopment" Role="SystemInDevelopment" Multiplicity="1" />
+          <End Type="DatabaseModel.Story" Role="Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemInDevelopment">
+              <PropertyRef Name="SystemId" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="SystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Story_1_0">
+          <End Type="DatabaseModel.SystemInDevelopment" Role="SystemInDevelopment" Multiplicity="1" />
+          <End Type="DatabaseModel.Story" Role="Story" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SystemInDevelopment">
+              <PropertyRef Name="SystemId" />
+            </Principal>
+            <Dependent Role="Story">
+              <PropertyRef Name="SystemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPart_1_0">
+          <End Type="DatabaseModel.Story" Role="Story" Multiplicity="0..1" />
+          <End Type="DatabaseModel.StoryPart" Role="StoryPart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Story">
+              <PropertyRef Name="StoryId" />
+            </Principal>
+            <Dependent Role="StoryPart">
+              <PropertyRef Name="StoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StoryPartProperty_1_0">
+          <End Type="DatabaseModel.StoryPart" Role="StoryPart" Multiplicity="1" />
+          <End Type="DatabaseModel.StoryPartProperty" Role="StoryPartProperty" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoryPart">
+              <PropertyRef Name="StoryPartId" />
+            </Principal>
+            <Dependent Role="StoryPartProperty">
+              <PropertyRef Name="StoryPartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities1">
+          <EntitySetMapping Name="Configurations">
+            <EntityTypeMapping TypeName="DatabaseModel.Configuration">
+              <MappingFragment StoreEntitySet="Configuration">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ConfigurationId" ColumnName="ConfigurationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enumerations">
+            <EntityTypeMapping TypeName="DatabaseModel.Enumeration">
+              <MappingFragment StoreEntitySet="Enumeration">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EnumerationId" ColumnName="EnumerationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EnumerationItems">
+            <EntityTypeMapping TypeName="DatabaseModel.EnumerationItem">
+              <MappingFragment StoreEntitySet="EnumerationItem">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EnumerationEnumerationId" ColumnName="EnumerationEnumerationId" />
+                <ScalarProperty Name="EnumerationId" ColumnName="EnumerationId" />
+                <ScalarProperty Name="EnumerationItemId" ColumnName="EnumerationItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartTypes">
+            <EntityTypeMapping TypeName="DatabaseModel.PartType">
+              <MappingFragment StoreEntitySet="PartType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PartTypeId" ColumnName="PartTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PartTypeProperties">
+            <EntityTypeMapping TypeName="DatabaseModel.PartTypeProperty">
+              <MappingFragment StoreEntitySet="PartTypeProperty">
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="PartTypeId" ColumnName="PartTypeId" />
+                <ScalarProperty Name="PartTypePropertyId" ColumnName="PartTypePropertyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Properties">
+            <EntityTypeMapping TypeName="DatabaseModel.Property">
+              <MappingFragment StoreEntitySet="Property">
+                <ScalarProperty Name="EnumerationId" ColumnName="EnumerationId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stories">
+            <EntityTypeMapping TypeName="DatabaseModel.Story">
+              <MappingFragment StoreEntitySet="Story">
+                <ScalarProperty Name="CompletionDate" ColumnName="CompletionDate" />
+                <ScalarProperty Name="EstimatedCompletionDuration" ColumnName="EstimatedCompletionDuration" />
+                <ScalarProperty Name="ActualCompletetionDuration" ColumnName="ActualCompletetionDuration" />
+                <ScalarProperty Name="SystemId" ColumnName="SystemId" />
+                <ScalarProperty Name="StoryTitle" ColumnName="StoryTitle" />
+                <ScalarProperty Name="TicketName" ColumnName="TicketName" />
+                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryParts">
+            <EntityTypeMapping TypeName="DatabaseModel.StoryPart">
+              <MappingFragment StoreEntitySet="StoryPart">
+                <ScalarProperty Name="PartDescription" ColumnName="PartDescription" />
+                <ScalarProperty Name="PartTypeId" ColumnName="PartTypeId" />
+                <ScalarProperty Name="StoryId" ColumnName="StoryId" />
+                <ScalarProperty Name="StoryPartId" ColumnName="StoryPartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoryPartProperties">
+            <EntityTypeMapping TypeName="DatabaseModel.StoryPartProperty">
+              <MappingFragment StoreEntitySet="StoryPartProperty">
+                <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+                <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+                <ScalarProperty Name="StoryPartId" ColumnName="StoryPartId" />
+                <ScalarProperty Name="StoryPartPropertyId" ColumnName="StoryPartPropertyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemInDevelopments">
+            <EntityTypeMapping TypeName="DatabaseModel.SystemInDevelopment">
+              <MappingFragment StoreEntitySet="SystemInDevelopment">
+                <ScalarProperty Name="LogicalDelete" ColumnName="LogicalDelete" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+                <ScalarProperty Name="SystemId" ColumnName="SystemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer>
+    <edmx:Connection>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <edmx:DesignerInfoPropertySet>
+        <edmx:DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <edmx:DesignerProperty Name="EnablePluralization" Value="true" />
+        <edmx:DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <edmx:DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <edmx:DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </edmx:DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams />
+  </edmx:Designer>
+</edmx:Edmx>

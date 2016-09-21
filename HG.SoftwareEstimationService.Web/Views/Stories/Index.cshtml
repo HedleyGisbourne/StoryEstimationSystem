@@ -1,0 +1,76 @@
+﻿<h2>Stories</h2>
+<div id="StoriesGrid" class="DataGrid"></div>
+
+<div class="application-button-bar">
+    <button class="btn btn-primary btn-lg" onclick="location.href = '@Url.Action("Index", "Home")'">Back</button>
+    <button id="estimateTask" class="btn btn-primary btn-lg">Estimate Task</button>
+    <button id="completeTask" class="btn btn-primary btn-lg">Complete Task</button>
+    <button id="inputObservations" class="btn btn-primary btn-lg">Input Observations</button>
+    <input id="showCompletedCheckbox" type="checkbox" checked="checked"/><small>Show completed stories</small>
+</div>
+<div class="application-button-bar">
+    <div class="pull-right">
+    </div>
+</div>
+
+<div id="CompleteTaskSection"></div>
+
+
+<script>
+    var allStories = @ViewBag.allStories;
+    var systemId = @ViewBag.systemId;
+    
+    var baseUrl = "/api/Stories/";
+    var getStories = "getStories/";
+    var getAllStories = "getAllStories/";
+    var firstCall = getAllStories;
+
+    var callback = function(id) {
+        location.href = '/Stories/' + systemId + "/Ticket/" + id;
+    }
+
+    if (allStories === 1) {
+        $('#showCompletedCheckbox').attr('checked', 'checked');
+        firstCall = getAllStories;
+    };
+
+    var grid = ui.grids.initGrid(
+        "StoriesGrid",
+        true,
+        true,
+        true,
+        baseUrl + firstCall + systemId,
+        { url: baseUrl + "AddStory/", callback: callback },
+        { url: baseUrl + "UpdateStory/", callback: callback },
+        baseUrl + "DeleteStory/");
+
+    grid.disableWhenNoRowSelected("inputObservations");
+    grid.disableWhenNoRowSelected("estimateTask");
+    grid.disableWhenNoRowSelected("completeTask");
+
+    $('#showCompletedCheckbox').click(function() {
+        if ($(this).is(':checked')) {
+            var includeCompletedStoriesUrl = baseUrl + getAllStories + systemId;
+            grid.resetFetchDataUrl(includeCompletedStoriesUrl);
+            $('#StoriesGridEdit').attr('disabled', 'disabled');
+        } else {
+            var excludeCompletedStoriesUrl = baseUrl + getStories + systemId;
+            grid.resetFetchDataUrl(excludeCompletedStoriesUrl);
+            $('#StoriesGridEdit').removeAttr('disabled');
+        }
+    });
+
+    $('#inputObservations').click(function() {
+        location.href = '/Stories/' + systemId + "/Ticket/" + grid.getSelectedRowId();
+    });
+
+    $('#estimateTask').click(function() {
+        service.callServer($.get("/api/Stories/EstimateStory/" + systemId + "/" + grid.getSelectedRowId()))
+            .done(function(result) {
+                if (result != null && result !== "")
+                    alert(result);
+            });
+    });
+
+    ui.completeTask(function() { return grid.getSelectedRowId() }, function() { grid.refreshGrid() });
+</script>

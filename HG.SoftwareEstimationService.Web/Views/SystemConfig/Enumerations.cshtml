@@ -1,0 +1,18 @@
+﻿@model int
+
+<h2>System Enumerations</h2>
+<div id="EnumerationsGrid" class="DataGrid"></div>
+
+<script>
+    var grid = ui.grids.initGrid(
+        "EnumerationsGrid",
+        true,
+        true,
+        true,
+        "/api/enumerations/GetAllenumerations/@Model",
+        "/api/enumerations/Addenumeration/@Model",
+        "/api/enumerations/Editenumeration/@Model",
+        "/api/enumerations/Deleteenumeration/@Model");
+
+        grid.addCustomButton("backButton", "Back", '@Url.Action("Index", new { systemId = @Model })');
+</script>

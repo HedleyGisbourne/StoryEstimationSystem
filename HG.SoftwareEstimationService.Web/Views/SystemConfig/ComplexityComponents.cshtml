@@ -1,0 +1,17 @@
+﻿@model int
+<h2>System complexity Components</h2>
+<div id="ComplexityComponentsGrid" class="DataGrid"></div>
+
+<script>
+    var grid = ui.grids.initGrid(
+        "complexityComponentsGrid",
+        true,
+        true,
+        true,
+        "/api/Complexities/GetAllcomplexityComponents/@Model",
+        "/api/Complexities/AddcomplexityComponent/@Model",
+        "/api/Complexities/EditcomplexityComponent/@Model",
+        "/api/Complexities/DeletecomplexityComponent/@Model");
+    
+        grid.addCustomButton("backButton", "Back", '@Url.Action("Index", new { systemId = @Model })');
+</script>

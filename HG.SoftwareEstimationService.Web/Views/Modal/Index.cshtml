@@ -1,0 +1,21 @@
+﻿@model HG.SoftwareEstimationService.Dto.ModalModel
+
+@{
+    Layout = "";
+}
+
+<div id="@Model.Id-Modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 id="@Model.Id-ModalType"></h4><h4 id="modal-label">Edit Story</h4>
+            </div>
+            <form id="@Model.Id-Form" class="modal-body row">
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

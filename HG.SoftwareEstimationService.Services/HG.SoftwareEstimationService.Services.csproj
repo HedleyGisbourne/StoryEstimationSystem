@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E51D954E-055E-445D-AC35-4C77238D4336}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HG.SoftwareEstimationService.Services</RootNamespace>
+    <AssemblyName>HG.SoftwareEstimationService.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>7416939b</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord, Version=3.0.2.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.3.0.2\lib\net45\Accord.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Accord.Math, Version=3.0.2.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.0.2\lib\net45\Accord.Math.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=3.0.2.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Statistics.3.0.2\lib\net45\Accord.Statistics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Analysis\AnalysierFactory.cs" />
+    <Compile Include="Analysis\Contract\IAnalysierFactory.cs" />
+    <Compile Include="Analysis\PartialLeastSquaresAnalysisWrapper\PartialLeastSquaresAnalysisWrapper.cs" />
+    <Compile Include="Analysis\Contract\AnalyserBase.cs" />
+    <Compile Include="Analysis\PositiveLinearRegression\PositiveLinearRegressionWrapper.cs" />
+    <Compile Include="Analysis\PositiveLinearRegression\PythonScripts.Designer.cs" />
+    <Compile Include="ApplicationConfiguration\ApplicationConfigurationService.cs" />
+    <Compile Include="ApplicationConfiguration\Contract\IApplicationConfigurationService.cs" />
+    <Compile Include="Automapper\AutomapperRegistrar.cs" />
+    <Compile Include="ConfigurationService.cs" />
+    <Compile Include="Contract\ILookupService.cs" />
+    <Compile Include="Contract\IObservationsService.cs" />
+    <Compile Include="Contract\IStoriesService.cs" />
+    <Compile Include="Contract\IEstimationService.cs" />
+    <Compile Include="Contract\IConfigurationService.cs" />
+    <Compile Include="Contract\ISystemInDevelopmentService.cs" />
+    <Compile Include="DurationService.cs" />
+    <Compile Include="Contract\IDurationService.cs" />
+    <Compile Include="EstimationService.cs" />
+    <Compile Include="Configuration\EstimationConfig.cs" />
+    <Compile Include="Exceptions\AnalysisException.cs" />
+    <Compile Include="Exceptions\EstimationException.cs" />
+    <Compile Include="LookupService.cs" />
+    <Compile Include="ObservationsService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoriesService.cs" />
+    <Compile Include="SystemInDevelopmentService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HG.SoftwareEstimationService.Dto\HG.SoftwareEstimationService.Dto.csproj">
+      <Project>{5ab35bb3-5ae4-44ca-b952-6294b7dd46e0}</Project>
+      <Name>HG.SoftwareEstimationService.Dto</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HG.SoftwareEstimationService.Enums\HG.SoftwareEstimationService.Enums.csproj">
+      <Project>{52c70a9d-3935-46a2-9113-07785abbef2a}</Project>
+      <Name>HG.SoftwareEstimationService.Enums</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HG.SoftwareEstimationService.Helpers\HG.SoftwareEstimationService.Helpers.csproj">
+      <Project>{af055ec8-77eb-498b-b13e-c34131f132ad}</Project>
+      <Name>HG.SoftwareEstimationService.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HG.SoftwareEstimationService.Repository\HG.SoftwareEstimationService.Repository.csproj">
+      <Project>{7ae2ea12-da91-4ed1-a605-e43cf34ad7e7}</Project>
+      <Name>HG.SoftwareEstimationService.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HG.SoftwareEstimationService.SqliteData\HG.SoftwareEstimationService.SqliteData.csproj">
+      <Project>{a6ece096-9130-4959-bde6-369ec9c018f2}</Project>
+      <Name>HG.SoftwareEstimationService.SqliteData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Analyser.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Analyser.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SystemConfiguration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Analysis\PositiveLinearRegression\PythonScripts.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.0.2\build\Accord.targets" Condition="Exists('..\packages\Accord.3.0.2\build\Accord.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.0.2\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.0.2\build\Accord.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
